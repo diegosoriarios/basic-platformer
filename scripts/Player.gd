@@ -11,7 +11,8 @@ var canJumpEvenMaybeNotTouchingTheGround = true
 var jumpWasPressed = false
 var isCrouched = false
 var is_dashing = false
-var can_dash = true
+var can_dash = false
+var dash_is_active = false
 var dash_direction = Vector2()
 export var dash_speed = 1000 
 export var dash_length = 0.2
@@ -72,8 +73,9 @@ func _physics_process(delta):
 		$Stand.disabled = false
 		$Crouch.disabled = true
 		$Sprite.scale.y = 1.5
-		
-	handle_dash(delta)
+	
+	if (dash_is_active):
+		handle_dash(delta)
 	
 	if is_on_floor():
 		can_dash = true
