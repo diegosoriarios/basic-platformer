@@ -1,91 +1,112 @@
 extends KinematicBody2D
 
+const SCALE = 2.5
+
 export var snap = false
 export var move_speed = 200
-export var jump_force = -500
+export var jump_force = -250
 export var gravity = 10
 export var slope_slide_threshold = 50.0
 var floorNormal = Vector2(0, -1)
 
 var canJumpEvenMaybeNotTouchingTheGround = true
 var jumpWasPressed = false
+var can_jump = true
 var isCrouched = false
 var is_dashing = false
 var can_dash = false
 var dash_is_active = false
 var dash_direction = Vector2()
-export var dash_speed = 1000 
+export var dash_speed = 500
 export var dash_length = 0.2
-onready var dash_timer = $Timer 
+onready var dash_timer = $Timer
+
+var is_on_rope = false 
+var can_hold_rope = true
+var rope = null
+
+var its_raining = false
 
 var velocity = Vector2()
 
 func _ready():
 	dash_timer.connect("timeout",self,"dash_timer_timeout")
+	its_raining = get_parent().find_node("RainParticle")
+	if its_raining:
+		move_speed = 50
+		jump_force = -125
 
 func _physics_process(delta):
-	var goDown = Input.is_action_pressed("ui_down") and Input.is_action_just_pressed("jump")
-	var jump = Input.is_action_just_pressed("jump")
-	var left = Input.is_action_pressed("ui_left")
-	var right = Input.is_action_pressed("ui_right")
-	var crouch = Input.is_action_just_pressed("ui_down")
-	
-	if is_on_floor():
-		canJumpEvenMaybeNotTouchingTheGround = true
-		if jumpWasPressed:
-			velocity.y = jump_force
-	
-	if goDown:
-		for platform in get_parent().get_children():
-			if platform.is_in_group('through'):
-				platform.disableCollision()
-	elif jump:
-		jumpWasPressed = true
-		rememberJumpTime()
-		if canJumpEvenMaybeNotTouchingTheGround:
-			velocity.y = jump_force
-	
-	if Input.is_action_just_released("jump"):
-		jump_cut()
-	
-	if !is_on_floor():
-		coyoteTime()
-		velocity.y += gravity
+	handle_animation()
+	if is_on_rope:
+		handle_rope()
+	else:
+		var goDown = Input.is_action_pressed("ui_down") and Input.is_action_just_pressed("jump")
+		var jump = Input.is_action_just_pressed("jump")
+		var left = Input.is_action_pressed("ui_left")
+		var right = Input.is_action_pressed("ui_right")
+		var crouch = Input.is_action_just_pressed("ui_down")
 		
-	if left:
-		velocity.x = -move_speed
-	elif right:
-		velocity.x = move_speed
-	else:
-		velocity.x = 0
-	
-	if crouch:
-		isCrouched = true
-	if Input.is_action_just_released("ui_down"):
-		isCrouched = false
-	
-	if isCrouched:
-		$Stand.disabled = true
-		$Crouch.disabled = false
-		$Sprite.scale.y = 1
-		velocity.x = 0
-	else:
-		$Stand.disabled = false
-		$Crouch.disabled = true
-		$Sprite.scale.y = 1.5
-	
-	if (dash_is_active):
-		handle_dash(delta)
-	
-	if is_on_floor():
-		can_dash = true
+		if is_on_floor():
+			canJumpEvenMaybeNotTouchingTheGround = true
+			can_jump = true
 		
-	if(is_dashing):
-		velocity = move_and_slide(dash_direction, floorNormal)
-		#vSpeed = 0
-		#hSpeed = 0
-	else:
-		velocity = move_and_slide(velocity, floorNormal)
+		if can_jump:
+			if jumpWasPressed:
+				velocity.y = jump_force
+		
+		if goDown:
+			for platform in get_parent().get_children():
+				if platform.is_in_group('through'):
+					platform.disableCollision()
+		elif jump:
+			jumpWasPressed = true
+			rememberJumpTime()
+			if canJumpEvenMaybeNotTouchingTheGround:
+				velocity.y = jump_force
+		
+		if Input.is_action_just_released("jump"):
+			can_jump = false
+			jump_cut()
+		
+		if !is_on_floor():
+			coyoteTime()
+			velocity.y += gravity
+			
+		if left:
+			velocity.x = -move_speed
+		elif right:
+			velocity.x = move_speed
+		else:
+			velocity.x = 0
+		
+		if crouch:
+			isCrouched = true
+		if Input.is_action_just_released("ui_down"):
+			isCrouched = false
+		
+		if isCrouched:
+			$Stand.disabled = true
+			$Crouch.disabled = false
+			$Sprite.scale.y = SCALE#.1
+			velocity.x = 0
+		else:
+			$Stand.disabled = false
+			$Crouch.disabled = true
+			$Sprite.scale.y = SCALE#.1
+		
+		if (dash_is_active):
+			handle_dash(delta)
+		
+		if is_on_floor():
+			can_dash = true
+			
+		if(is_dashing):
+			velocity = move_and_slide(dash_direction, floorNormal)
+			#vSpeed = 0
+			#hSpeed = 0
+		else:
+			velocity = move_and_slide(velocity, floorNormal)
 
 func coyoteTime():
 	yield(get_tree().create_timer(.1), "timeout")
@@ -134,3 +155,105 @@ func dash_timer_timeout():
 func jump_cut():
 	if velocity.y < -100:
 		velocity.y = -100
+
+func transition_on():
+	set_physics_process(false)
+
+func transition_off():
+	yield(get_tree().create_timer(1), "timeout")
+	set_physics_process(true)
+
+func hit():
+	get_tree().reload_current_scene()
+
+func handle_rope():
+	if rope != null:
+		$Stand.disabled = true
+		position = rope.global_position
+		rope.applied_force = Vector2(1, 1)
+		velocity -= rope.applied_force
+		
+		var jump = Input.is_action_just_pressed("jump")
+		var left = Input.is_action_pressed("ui_left")
+		var right = Input.is_action_pressed("ui_right")
+		var up = Input.is_action_just_pressed("ui_up")
+		var down = Input.is_action_just_pressed("ui_down")
+		
+		if left:
+			rope.applied_force.x -= move_speed
+		if right:
+			rope.applied_force.x += move_speed
+		
+		if up:
+			var ropes = rope.get_parent()
+			var index = ropes.get_children().find(rope)
+			if index - 2 > 0:
+				rope = ropes.get_child(index - 2)
+		elif down:
+			var ropes = rope.get_parent()
+			var index = ropes.get_children().find(rope)
+			if index + 2 < ropes.get_child_count():
+				rope = ropes.get_child(index + 2)
+		
+		if jump:
+			velocity.y += jump_force
+			is_on_rope = false
+			rope = null
+			can_hold_rope = false
+			yield(get_tree().create_timer(.2), "timeout")
+			$Stand.disabled = false
+
+func _on_Hold_body_entered(body):
+	if body.is_in_group("chain") and !is_on_rope and can_hold_rope:
+		#set_collision_layer_bit(1, true)
+		#set_collision_layer_bit(0, false)
+		#set_collision_mask_bit(1, true)
+		#set_collision_mask_bit(0, false)
+		#canJumpEvenMaybeNotTouchingTheGround = true
+		#can_jump = true
+		yield(get_tree().create_timer(.4), "timeout")
+		is_on_rope = true
+		rope = body
+
+
+func _on_Hold_body_exited(body):
+	if body.is_in_group("chain") and !is_on_rope:
+		#set_collision_layer_bit(0, true)
+		#set_collision_layer_bit(1, false)
+		#set_collision_mask_bit(1, false)
+		#set_collision_mask_bit(0, true)
+		is_on_rope = false
+		rope = null
+		yield(get_tree().create_timer(.5), "timeout")
+		can_hold_rope = true
+
+func handle_animation():
+	var lookLeft = Input.is_action_just_pressed("ui_left")
+	var lookRight = Input.is_action_just_pressed("ui_right")
+	var isWalking = (Input.is_action_pressed("ui_right") or Input.is_action_pressed("ui_left"))
+	var isIdle = Input.is_action_just_released("ui_right") or Input.is_action_just_pressed("ui_left")
+	var isJumping = Input.is_action_pressed("jump")
+	var crouch = Input.is_action_pressed("ui_down")
+	
+	if lookLeft: $Sprite.flip_h = true
+	elif lookRight: $Sprite.flip_h = false
+	
+	if isJumping or !can_jump:
+		$Sprite.play("jump")
+	elif isWalking and !crouch:
+		$Sprite.play("walk")
+	else:
+		$Sprite.play("idle")
+
+func _on_Hold_area_entered(area):
+	if area.is_in_group('cover'):
+		if its_raining:
+			move_speed = 200
+			jump_force = -250
+
+
+func _on_Hold_area_exited(area):
+	if area.is_in_group('cover'):
+		if its_raining:
+			move_speed = 50
+			jump_force = -125
