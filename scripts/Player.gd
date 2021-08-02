@@ -25,6 +25,9 @@ var is_on_rope = false
 var can_hold_rope = true
 var rope = null
 
+var wall_jump = 100
+var jump_wall = 20
+
 var its_raining = false
 
 var velocity = Vector2()
@@ -47,13 +50,24 @@ func _physics_process(delta):
 		var right = Input.is_action_pressed("ui_right")
 		var crouch = Input.is_action_just_pressed("ui_down")
 		
-		if is_on_floor():
+		if is_on_floor() or is_next_wall():
 			canJumpEvenMaybeNotTouchingTheGround = true
 			can_jump = true
 		
 		if can_jump:
 			if jumpWasPressed:
-				velocity.y = jump_force
+				if next_to_wall_right():
+					velocity.x += wall_jump
+					velocity.y = jump_force
+					$isNextWallRight.enabled = false
+					$isNextWallLeft.enabled = true
+				elif next_to_wall_left():
+					velocity.x -= wall_jump
+					velocity.y = jump_force
+					$isNextWallLeft.enabled = false
+					$isNextWallRight.enabled = true
+				else:
+					velocity.y = jump_force
 		
 		if goDown:
 			for platform in get_parent().get_children():
@@ -77,8 +91,11 @@ func _physics_process(delta):
 			velocity.x = -move_speed
 		elif right:
 			velocity.x = move_speed
-		else:
-			velocity.x = 0
+		else :
+			if is_on_floor():
+				velocity.x = 0
+				$isNextWallLeft.enabled = true
+				$isNextWallRight.enabled = true
 		
 		if crouch:
 			isCrouched = true
@@ -257,3 +274,12 @@ func _on_Hold_area_exited(area):
 		if its_raining:
 			move_speed = 50
 			jump_force = -125
+
+func is_next_wall():
+	return next_to_wall_left() or next_to_wall_right()
+
+func next_to_wall_left():
+	return $isNextWallLeft.is_colliding()
+
+func next_to_wall_right():
+	return $isNextWallRight.is_colliding()
