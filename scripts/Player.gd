@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-const SCALE = 2.5
+const SCALE = 1
 
 export var snap = false
 export var move_speed = 200
@@ -250,13 +250,22 @@ func handle_animation():
 	var isWalking = (Input.is_action_pressed("ui_right") or Input.is_action_pressed("ui_left"))
 	var isIdle = Input.is_action_just_released("ui_right") or Input.is_action_just_pressed("ui_left")
 	var isJumping = Input.is_action_pressed("jump")
+	var releaseJump = Input.is_action_just_released("jump")
 	var crouch = Input.is_action_pressed("ui_down")
+	var is_on_left_wall = next_to_wall_left()
+	var is_on_right_wall = next_to_wall_right()
 	
 	if lookLeft: $Sprite.flip_h = true
 	elif lookRight: $Sprite.flip_h = false
 	
-	if isJumping or !can_jump:
+	if is_dashing:
+		$Sprite.play("dash")
+	elif isJumping or !can_jump:
 		$Sprite.play("jump")
+	elif releaseJump or !next_to_floor():
+		$Sprite.play("falling")
+	elif is_on_left_wall or is_on_right_wall:
+		$Sprite.play("wall_slide")
 	elif isWalking and !crouch:
 		$Sprite.play("walk")
 	else:
@@ -279,7 +288,10 @@ func is_next_wall():
 	return next_to_wall_left() or next_to_wall_right()
 
 func next_to_wall_left():
-	return $isNextWallLeft.is_colliding()
+	return $isNextWallLeft.is_colliding() and not next_to_floor()
 
 func next_to_wall_right():
-	return $isNextWallRight.is_colliding()
+	return $isNextWallRight.is_colliding() and not next_to_floor()
+
+func next_to_floor():
+	return $isNextFloor.is_colliding()

@@ -9,7 +9,7 @@ extents = Vector2( 62.8436, 15.2546 )
 [node name="HorizontalPlatform" type="KinematicBody2D" groups=[
 "platform",
 ]]
-position = Vector2( -177.192, 145.083 )
+position = Vector2( -177.192, 146.944 )
 script = ExtResource( 1 )
 time = 2
 
@@ -22,4 +22,5 @@ shape = SubResource( 1 )
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true
+
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
