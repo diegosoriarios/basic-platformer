@@ -1,10 +1,12 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/Spike.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/Camera.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/MovingPlatform.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/SecretSpot.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/World1/Scene8.tscn" type="PackedScene" id=7]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
@@ -32,18 +34,20 @@ points = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
 } ]
 0/z_index = 0
 
+[sub_resource type="Curve2D" id=3]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, -1.33731, -1.55154, 0, 0, 0, 0, 220.395, -4.20706 )
+}
+
 [node name="World" type="Node2D"]
 position = Vector2( -2552, 283.539 )
 
 [node name="Camera2D" parent="." instance=ExtResource( 4 )]
 position = Vector2( 3064, 0 )
+next_scene = ExtResource( 7 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 position = Vector2( 2597.45, 226.549 )
-
-[node name="Spike" parent="." instance=ExtResource( 3 )]
-position = Vector2( 2846.2, 307.851 )
-scale = Vector2( -125.676, 1.66668 )
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource( 2 )
@@ -55,9 +59,222 @@ tile_data = PoolIntArray( -655281, 0, 0, -655280, 0, 0, -655279, 0, 0, -655278, 
 position = Vector2( 2820.95, 115.262 )
 
 [node name="KinematicBody2D" parent="MovingPlatform" index="0"]
-position = Vector2( 0.512787, -0.425751 )
+position = Vector2( -1.33731, -1.55154 )
+
+[node name="Path2D" parent="MovingPlatform" index="1"]
+curve = SubResource( 3 )
+
+[node name="PathFollow2D" parent="MovingPlatform/Path2D" index="0"]
+position = Vector2( -1.33731, -1.55154 )
 
 [node name="AnimationPlayer" parent="MovingPlatform" index="2"]
 playback_speed = 0.5
+
+[node name="SecretSpot" parent="." instance=ExtResource( 6 )]
+position = Vector2( 3217.93, -234.157 )
+scale = Vector2( 2.28, 2.48 )
+
+[node name="Node" type="Node" parent="."]
+
+[node name="Spike" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 119.497, 585 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike2" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 151.362, 585 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike3" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 183.228, 585 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike4" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 215.093, 585 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike5" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 246.96, 585 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike6" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 278.825, 585 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike7" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 310.691, 585 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike8" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 342.556, 585 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike9" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 374.423, 585 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike10" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 406.288, 585 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike11" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 438.154, 585 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike12" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 470.019, 585 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike13" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 500.558, 585 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike14" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 532.423, 585 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike15" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 564.289, 585 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike16" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 596.154, 585 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike17" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 628.021, 585 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike18" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 659.886, 585 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike19" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 691.753, 585 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike20" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 723.618, 585 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike21" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 755.484, 585 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike22" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 787.349, 585 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike23" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 819.216, 585 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike24" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 851.081, 585 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike25" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 882.946, 585 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike26" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 914.812, 585 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike27" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 946.678, 585 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike28" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 22.5711, 416.377 )
+scale = Vector2( 2, 2 )
+
+[node name="Spike29" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 23.8988, 286.259 )
+scale = Vector2( 2, 2 )
+
+[node name="Spike31" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 120.824, 364.595 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike34" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 122.152, 460.193 )
+rotation = 1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike35" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 120.824, 331.402 )
+rotation = 1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike36" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 122.152, 203.939 )
+rotation = 1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike37" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 345.212, 266.343 )
+rotation = 1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike38" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 377.077, 266.343 )
+rotation = 1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike39" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 408.943, 265.015 )
+rotation = 1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike40" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 537.734, 109.669 )
+rotation = 3.14159
+scale = Vector2( 2, 2 )
+
+[node name="Spike41" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 792.66, 108.342 )
+scale = Vector2( 2, 2 )
+
+[node name="Spike32" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 122.152, 235.805 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike33" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 120.824, 107.014 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike30" parent="Node" instance=ExtResource( 3 )]
+position = Vector2( 23.8988, 150.829 )
+scale = Vector2( 2, 2 )
 
 [editable path="MovingPlatform"]

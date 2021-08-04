@@ -43,11 +43,6 @@ animations = [ {
 "name": "jump",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ), ExtResource( 25 ), ExtResource( 26 ), ExtResource( 24 ) ],
-"loop": true,
-"name": "wall_slide",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 21 ), ExtResource( 20 ), ExtResource( 22 ), ExtResource( 23 ) ],
 "loop": true,
 "name": "dash",
@@ -61,6 +56,11 @@ animations = [ {
 "frames": [ ExtResource( 30 ) ],
 "loop": true,
 "name": "falling",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ), ExtResource( 25 ), ExtResource( 26 ), ExtResource( 24 ) ],
+"loop": true,
+"name": "wall_slide",
 "speed": 5.0
 } ]
 
@@ -104,22 +104,22 @@ shape = SubResource( 4 )
 [node name="isNextWallRight" type="RayCast2D" parent="."]
 position = Vector2( 0, 15 )
 enabled = true
-cast_to = Vector2( 25, 0 )
+cast_to = Vector2( 15, 0 )
 
 [node name="isNextWallLeft" type="RayCast2D" parent="."]
 position = Vector2( 0, 15 )
 enabled = true
-cast_to = Vector2( -25, 0 )
+cast_to = Vector2( -15, 0 )
 
 [node name="isNextWallRight2" type="RayCast2D" parent="."]
 position = Vector2( 0, -5 )
 enabled = true
-cast_to = Vector2( 25, 0 )
+cast_to = Vector2( 15, 0 )
 
 [node name="isNextWallLeft2" type="RayCast2D" parent="."]
 position = Vector2( 0, -5 )
 enabled = true
-cast_to = Vector2( -25, 0 )
+cast_to = Vector2( -15, 0 )
 
 [node name="isNextFloor" type="RayCast2D" parent="."]
 position = Vector2( 0, 15 )

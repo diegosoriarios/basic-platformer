@@ -15,7 +15,7 @@ var can_jump = true
 var isCrouched = false
 var is_dashing = false
 var can_dash = false
-var dash_is_active = false
+var dash_is_active = true
 var dash_direction = Vector2()
 export var dash_speed = 500
 export var dash_length = 0.2
@@ -57,22 +57,13 @@ func _physics_process(delta):
 		
 		if can_jump:
 			if jumpWasPressed:
-				print(next_to_wall_left())
 				if next_to_wall_right():
-					#velocity.x += wall_jump
+					velocity.x += wall_jump
 					velocity.y = jump_force
-					$isNextWallRight.enabled = false
-					$isNextWallLeft.enabled = true
-					$isNextWallRight2.enabled = false
-					$isNextWallLeft2.enabled = true
 				elif next_to_wall_left():
-					#velocity.x -= wall_jump
+					velocity.x -= wall_jump
 					velocity.y = jump_force
-					$isNextWallLeft.enabled = false
-					$isNextWallRight.enabled = true
-					$isNextWallLeft2.enabled = false
-					$isNextWallRight2.enabled = true
-				else:
+				elif is_on_floor():
 					velocity.y = jump_force
 		
 		if goDown:
@@ -97,13 +88,9 @@ func _physics_process(delta):
 			velocity.x = -move_speed
 		elif right:
 			velocity.x = move_speed
-		else :
-			if is_on_floor():
-				velocity.x = 0
-				$isNextWallLeft.enabled = true
-				$isNextWallRight.enabled = true
-				$isNextWallLeft2.enabled = true
-				$isNextWallRight2.enabled = true
+		else:
+			#if is_on_floor():
+			velocity.x = 0
 		
 		if crouch:
 			isCrouched = true
@@ -171,8 +158,9 @@ func get_direction_from_input():
 			move_dir.x = -1
 		else:
 			move_dir.x = 1
-			
-	return move_dir * dash_speed
+	
+	var dashing_speed = dash_speed if move_dir.y == 0 else dash_speed * .6
+	return move_dir * dashing_speed
 	
 func dash_timer_timeout():
 	is_dashing = false
