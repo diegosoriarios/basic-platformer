@@ -31,6 +31,7 @@ var jump_wall = 20
 var its_raining = false
 
 var velocity = Vector2()
+var snapNormal = Vector2.DOWN
 
 func _ready():
 	dash_timer.connect("timeout",self,"dash_timer_timeout")
@@ -56,16 +57,21 @@ func _physics_process(delta):
 		
 		if can_jump:
 			if jumpWasPressed:
+				print(next_to_wall_left())
 				if next_to_wall_right():
-					velocity.x += wall_jump
+					#velocity.x += wall_jump
 					velocity.y = jump_force
 					$isNextWallRight.enabled = false
 					$isNextWallLeft.enabled = true
+					$isNextWallRight2.enabled = false
+					$isNextWallLeft2.enabled = true
 				elif next_to_wall_left():
-					velocity.x -= wall_jump
+					#velocity.x -= wall_jump
 					velocity.y = jump_force
 					$isNextWallLeft.enabled = false
 					$isNextWallRight.enabled = true
+					$isNextWallLeft2.enabled = false
+					$isNextWallRight2.enabled = true
 				else:
 					velocity.y = jump_force
 		
@@ -96,6 +102,8 @@ func _physics_process(delta):
 				velocity.x = 0
 				$isNextWallLeft.enabled = true
 				$isNextWallRight.enabled = true
+				$isNextWallLeft2.enabled = true
+				$isNextWallRight2.enabled = true
 		
 		if crouch:
 			isCrouched = true
@@ -119,11 +127,11 @@ func _physics_process(delta):
 			can_dash = true
 			
 		if(is_dashing):
-			velocity = move_and_slide(dash_direction, floorNormal)
+			velocity = move_and_slide_with_snap(dash_direction, snapNormal, floorNormal)
 			#vSpeed = 0
 			#hSpeed = 0
 		else:
-			velocity = move_and_slide(velocity, floorNormal)
+			velocity = move_and_slide_with_snap(velocity, snapNormal, floorNormal)
 
 func coyoteTime():
 	yield(get_tree().create_timer(.1), "timeout")
@@ -288,10 +296,10 @@ func is_next_wall():
 	return next_to_wall_left() or next_to_wall_right()
 
 func next_to_wall_left():
-	return $isNextWallLeft.is_colliding() and not next_to_floor()
+	return ($isNextWallLeft.is_colliding() or $isNextWallLeft2.is_colliding()) and !next_to_floor()
 
 func next_to_wall_right():
-	return $isNextWallRight.is_colliding() and not next_to_floor()
+	return ($isNextWallRight.is_colliding() or $isNextWallRight2.is_colliding()) and !next_to_floor()
 
 func next_to_floor():
 	return $isNextFloor.is_colliding()
