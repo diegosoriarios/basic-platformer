@@ -37,7 +37,8 @@ func _process(delta):
 
 func _on_Area2D_body_entered(body):
 	if body.name == "Player" and can_collide:
-		get_tree().change_scene_to(next_scene)
+		#get_tree().change_scene_to(next_scene)
+		current = true
 		#print('aqui')
 		#can_collide = false
 		#move_front = true
