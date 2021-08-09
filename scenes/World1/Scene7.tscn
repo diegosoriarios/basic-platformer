@@ -45,6 +45,7 @@ position = Vector2( -2552, 283.539 )
 
 [node name="Camera2D" parent="." instance=ExtResource( 4 )]
 position = Vector2( 3064, 0 )
+current = false
 next_scene = ExtResource( 7 )
 
 [node name="Position2D" type="Position2D" parent="Camera2D"]

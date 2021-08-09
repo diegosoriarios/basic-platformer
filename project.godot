@@ -11,7 +11,7 @@ config_version=4
 [application]
 
 config/name="Maskerade"
-run/main_scene="res://scenes/World1/Scene1.tscn"
+run/main_scene="res://scenes/Interface/MainMenu.tscn"
 config/icon="res://icon.png"
 
 [autoload]
