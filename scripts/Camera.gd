@@ -39,6 +39,7 @@ func _on_Area2D_body_entered(body):
 	if body.name == "Player" and can_collide:
 		#get_tree().change_scene_to(next_scene)
 		current = true
+		Global.current_position = find_node("Position2D").global_position
 		#print('aqui')
 		#can_collide = false
 		#move_front = true

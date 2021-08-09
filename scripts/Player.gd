@@ -177,7 +177,8 @@ func transition_off():
 	set_physics_process(true)
 
 func hit():
-	get_tree().reload_current_scene()
+	global_position = Global.current_position
+	Global.total_deaths += 1
 
 func handle_rope():
 	if rope != null:
