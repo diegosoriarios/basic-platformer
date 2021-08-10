@@ -1,7 +1,7 @@
 extends Control
 
 onready var selection = $Selection
-onready var option_scene = preload("res://scenes/Interface/Options.tscn")
+#onready var option_scene = preload("res://scenes/Interface/Options.tscn")
 var selected = 0
 
 func _ready():
@@ -39,7 +39,7 @@ func handle_selection():
 		get_tree().paused = false
 		visible = false
 	elif selected == 1:
-		get_tree().change_scene_to(option_scene)
+		pass
 	else:
 		handle_save()
 		get_tree().quit()
