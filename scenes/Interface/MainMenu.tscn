@@ -25,6 +25,16 @@ size = 36
 outline_color = Color( 0.0705882, 0.254902, 0.376471, 1 )
 font_data = ExtResource( 2 )
 
+[sub_resource type="DynamicFont" id=5]
+size = 36
+outline_color = Color( 0.0705882, 0.254902, 0.376471, 1 )
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 36
+outline_color = Color( 0.0705882, 0.254902, 0.376471, 1 )
+font_data = ExtResource( 2 )
+
 [sub_resource type="DynamicFont" id=7]
 size = 36
 outline_color = Color( 0.0705882, 0.254902, 0.376471, 1 )
@@ -40,17 +50,7 @@ size = 36
 outline_color = Color( 0.0705882, 0.254902, 0.376471, 1 )
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=10]
-size = 36
-outline_color = Color( 0.0705882, 0.254902, 0.376471, 1 )
-font_data = ExtResource( 2 )
-
-[sub_resource type="DynamicFont" id=13]
-size = 36
-outline_color = Color( 0.0705882, 0.254902, 0.376471, 1 )
-font_data = ExtResource( 2 )
-
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=10]
 resource_name = "credits-main"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Camera2D:offset")
@@ -65,7 +65,7 @@ tracks/0/keys = {
 "values": [ Vector2( -1024, 0 ), Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=11]
 resource_name = "main-credits"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Camera2D:offset")
@@ -80,8 +80,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( -1024, 0 ) ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "main-options"
+[sub_resource type="Animation" id=12]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Camera2D:offset")
 tracks/0/interp = 1
@@ -95,8 +94,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 1024, 0 ) ]
 }
 
-[sub_resource type="Animation" id=6]
-resource_name = "options-main"
+[sub_resource type="Animation" id=13]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Camera2D:offset")
 tracks/0/interp = 1
@@ -211,7 +209,7 @@ rect_min_size = Vector2( 100, 50 )
 [node name="Label" type="CheckButton" parent="Options/Fullscreen"]
 anchor_right = 1.0
 margin_bottom = 45.0
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 5 )
 text = "Fullscreen"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -227,7 +225,7 @@ rect_min_size = Vector2( 100, 50 )
 margin_top = 6.0
 margin_right = 223.0
 margin_bottom = 43.0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 6 )
 text = "Volume Musica"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -255,7 +253,7 @@ rect_min_size = Vector2( 0, 50 )
 [node name="Label" type="Label" parent="Options/EffectsVolume"]
 margin_right = 40.0
 margin_bottom = 14.0
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 7 )
 text = "Volume Efeitos"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -288,7 +286,7 @@ margin_left = -360.5
 margin_top = -50.0
 margin_right = 360.5
 rect_min_size = Vector2( 0, 50 )
-custom_fonts/font = SubResource( 10 )
+custom_fonts/font = SubResource( 8 )
 text = "Salvar"
 align = 1
 __meta__ = {
@@ -319,7 +317,7 @@ margin_left = -46.0
 margin_top = -18.5
 margin_right = 46.0
 margin_bottom = 18.5
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 9 )
 text = "Voltar"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -335,10 +333,10 @@ autoplay = true
 stream = ExtResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/credits-main = SubResource( 11 )
-anims/main-credits = SubResource( 12 )
-anims/main-options = SubResource( 5 )
-anims/options-main = SubResource( 6 )
+anims/credits-main = SubResource( 10 )
+anims/main-credits = SubResource( 11 )
+anims/main-options = SubResource( 12 )
+anims/options-main = SubResource( 13 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0

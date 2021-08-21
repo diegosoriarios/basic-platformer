@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scenes/World1/Scene1.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/World1/Scene2.tscn" type="PackedScene" id=2]
@@ -9,8 +9,10 @@
 [ext_resource path="res://scenes/World1/Scene6.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scenes/World1/Scene4.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/World1/Scene8.tscn" type="PackedScene" id=9]
+[ext_resource path="res://scenes/World1/Scene10.tscn" type="PackedScene" id=10]
 
 [node name="World1" type="Node2D"]
+position = Vector2( -9, 0 )
 
 [node name="World" parent="." instance=ExtResource( 1 )]
 position = Vector2( -1024, -142.4 )
@@ -38,3 +40,6 @@ position = Vector2( 3748.8, 150.139 )
 
 [node name="World9" parent="." instance=ExtResource( 6 )]
 position = Vector2( 4806.3, 149.739 )
+
+[node name="World10" parent="." instance=ExtResource( 10 )]
+position = Vector2( 8391.89, -138.703 )

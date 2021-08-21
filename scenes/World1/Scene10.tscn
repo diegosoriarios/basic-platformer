@@ -1,0 +1,133 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://scenes/Spike.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/Camera.tscn" type="PackedScene" id=4]
+
+[sub_resource type="ConvexPolygonShape2D" id=1]
+points = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
+
+[sub_resource type="TileSet" id=2]
+0/name = "icon.png 0"
+0/texture = ExtResource( 1 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 32, 32 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape = SubResource( 1 )
+0/shape_one_way = false
+0/shape_one_way_margin = 1.0
+0/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 1 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
+0/z_index = 0
+
+[node name="World" type="Node2D"]
+
+[node name="Camera2D" parent="." instance=ExtResource( 4 )]
+position = Vector2( 512, 300 )
+current = false
+
+[node name="Position2D" type="Position2D" parent="Camera2D"]
+position = Vector2( -475.992, 230.198 )
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource( 2 )
+cell_size = Vector2( 32, 32 )
+format = 1
+tile_data = PoolIntArray( -4652989, 0, 0, 19, 0, 0, 20, 0, 0, 21, 0, 0, 65555, 0, 0, 65556, 0, 0, 65557, 0, 0, 131091, 0, 0, 131092, 0, 0, 131093, 0, 0, 196616, 0, 0, 196627, 0, 0, 196628, 0, 0, 196629, 0, 0, 262163, 0, 0, 262164, 0, 0, 262165, 0, 0, 327692, 0, 0, 327699, 0, 0, 327700, 0, 0, 327701, 0, 0, 393235, 0, 0, 393236, 0, 0, 393237, 0, 0, 458760, 0, 0, 458771, 0, 0, 458772, 0, 0, 458773, 0, 0, 524307, 0, 0, 524308, 0, 0, 524309, 0, 0, 589835, 0, 0, 655365, 0, 0, 786440, 0, 0, 851970, 0, 0, 851987, 0, 0, 851988, 0, 0, 851989, 0, 0, 983045, 0, 0, 1048601, 0, 0, 1048602, 0, 0, 1048603, 0, 0, 1048604, 0, 0, 1048605, 0, 0, 1048606, 0, 0, 1048607, 0, 0, 1179648, 0, 0, 1179649, 0, 0, 1179650, 0, 0 )
+
+[node name="Spikes" type="Node2D" parent="."]
+position = Vector2( 2552, -282 )
+
+[node name="Spike" parent="Spikes" instance=ExtResource( 3 )]
+position = Vector2( -1927.71, 585.776 )
+rotation = 1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike2" parent="Spikes" instance=ExtResource( 3 )]
+position = Vector2( -1895.71, 585.776 )
+rotation = 1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike3" parent="Spikes" instance=ExtResource( 3 )]
+position = Vector2( -1864.46, 586.026 )
+rotation = 1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike4" parent="Spikes" instance=ExtResource( 3 )]
+position = Vector2( -1927.71, 682 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike5" parent="Spikes" instance=ExtResource( 3 )]
+position = Vector2( -1895.71, 682 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike6" parent="Spikes" instance=ExtResource( 3 )]
+position = Vector2( -1864.46, 682 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike8" parent="Spikes" instance=ExtResource( 3 )]
+position = Vector2( -2374.99, 746.7 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike9" parent="Spikes" instance=ExtResource( 3 )]
+position = Vector2( -2472.92, 682 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike10" parent="Spikes" instance=ExtResource( 3 )]
+position = Vector2( -2277.41, 650.887 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike11" parent="Spikes" instance=ExtResource( 3 )]
+position = Vector2( -2377.82, 586.187 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike12" parent="Spikes" instance=ExtResource( 3 )]
+position = Vector2( -2181.59, 554.367 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike13" parent="Spikes" instance=ExtResource( 3 )]
+position = Vector2( -2280.94, 491.081 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike14" parent="Spikes" instance=ExtResource( 3 )]
+position = Vector2( -2149.42, 428.856 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike15" parent="Spikes" instance=ExtResource( 3 )]
+position = Vector2( -2280.94, 362.741 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Spike7" parent="Spikes" instance=ExtResource( 3 )]
+position = Vector2( -2034.16, 879.99 )
+rotation = -1.5708
+scale = Vector2( 2, 61.84 )
+
+[node name="Spike16" parent="Spikes" instance=ExtResource( 3 )]
+position = Vector2( -2541.16, 492.99 )
+scale = Vector2( 2, 30 )
+
+[node name="Spike17" parent="Spikes" instance=ExtResource( 3 )]
+position = Vector2( -2049.16, 267 )
+rotation = -1.5708
+scale = Vector2( 2, 62 )
