@@ -13,6 +13,10 @@ onready var selection = [
 
 func _ready():
 	select_index(0)
+	$Sound/Lead.volume_db = settings.music_volume
+	$Sound/Main.volume_db = settings.music_volume
+	$Options/EffectsVolume/HSlider.value = settings.fx_volume + 50
+	$Options/MusicVolume/HSlider.value = settings.music_volume + 50
 
 func _input(event):
 	if event.is_action_pressed("ui_up"):
@@ -27,6 +31,10 @@ func _input(event):
 		if selected == selection[current_tab].get_child_count():
 			selected = 0
 		select_index(selected)
+	elif event.is_action_pressed("ui_left"):
+		handle_option_slider(-10)
+	elif event.is_action_pressed("ui_right"):
+		handle_option_slider(10)
 	elif event.is_action_pressed("select"):
 		unselect_index()
 		if (current_tab == 0):
@@ -64,17 +72,46 @@ func handle_selection():
 
 func handle_option_selection():
 	if selected == 0:
-		pass
+		OS.window_fullscreen = !OS.window_fullscreen
+		$Options/Fullscreen/Label.pressed = OS.window_fullscreen
+		current_tab = 1
+		selected = 0
+		select_index(0)
 	elif selected == 1:
-		pass
+		current_tab = 1
+		selected = 1
+		select_index(1)
 	elif selected == 2:
-		pass
+		current_tab = 1
+		selected = 2
+		select_index(2)
 	elif selected == 3:
 		$AnimationPlayer.play("options-main")
 		current_tab = 0
 		selected = 0
 		select_index(0)
 
+func handle_option_slider(value):
+	if selected == 1:
+		$Options/MusicVolume/HSlider.value += value
+		handle_sound_volume(value)
+	elif selected == 2:
+		$Options/EffectsVolume/HSlider.value += value
+		handle_fx_volume(value)
+
+func handle_sound_volume(volume):
+	settings.music_volume += volume
+	var sounds = $Sound.get_children()
+	if (sounds != null):
+		for sound in sounds:
+			sound.volume_db = settings.music_volume
+
+func handle_fx_volume(volume):
+	settings.fx_volume = volume - 50
+	var effects = $Effects.get_children()
+	if (effects != null):
+		for fx in effects:
+			fx.volume_db = volume - 50
 
 func _on_Lead_finished():
 	$Sound/Lead.play()
